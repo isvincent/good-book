@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>楊梅高中圖書館每週一書介紹</title>
+<meta name="description" content="楊梅高中圖書館每週一書介紹，每週推薦一本好書。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   設定重點：圖片放在哪、掃到第幾週，都在 <script> 最上方的 CONFIG。
+   加新書 = 丟一張命名正確的 PNG 進資料夾，重新整理即可，不用改這份檔案。
+   ============================================================ */
+
+:root{
+  --coral:#FF5A7E;
+  --gold:#FFC44D;
+  --teal:#22CBB4;
+  --violet:#7C5CFC;
+  --sky:#39B6FF;
+  --ink:#2B2340;
+  --ink-soft:#5B5270;
+  --paper:#FFFDF8;
+  --line:#EAE3F5;
+  --shadow:0 18px 40px -18px rgba(58,32,80,.45);
+  --radius:22px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  color:var(--ink);
+  font-size:18px;
+  line-height:1.7;
+  background:#FFF6EC;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* 背景流動色塊 */
+.bg-orbs{position:fixed;inset:0;z-index:-2;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;animation:drift 22s ease-in-out infinite}
+.orb.o1{width:46vw;height:46vw;background:var(--coral);top:-8vw;left:-6vw}
+.orb.o2{width:40vw;height:40vw;background:var(--sky);top:10vw;right:-10vw;animation-delay:-6s}
+.orb.o3{width:38vw;height:38vw;background:var(--gold);bottom:-8vw;left:12vw;animation-delay:-11s}
+.orb.o4{width:34vw;height:34vw;background:var(--teal);bottom:4vw;right:6vw;animation-delay:-3s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(4vw,-3vw) scale(1.08)}66%{transform:translate(-3vw,3vw) scale(.95)}}
+.bg-veil{position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(255,253,248,.35),rgba(255,253,248,.82))}
+
+/* 飄浮小圖示 */
+.floaties{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.floaties span{position:absolute;font-size:26px;opacity:.5;animation:floaty 9s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(10deg)}}
+
+/* 頂欄 */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 20px;
+  background:rgba(255,253,248,.72);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px}
+.brand .logo{
+  width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+  background:linear-gradient(135deg,var(--coral),var(--violet));box-shadow:var(--shadow)
+}
+.brand small{display:block;font-weight:500;font-size:12px;color:var(--ink-soft);letter-spacing:2px}
+.topbar-actions{display:flex;align-items:center;gap:10px}
+.pill{
+  font-family:"Baloo 2","Noto Sans TC",sans-serif;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:999px;font-weight:800;font-size:15px;
+  background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:0 4px 12px -6px rgba(58,32,80,.4)
+}
+.pill b{color:var(--coral)}
+.iconbtn{
+  width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;
+  cursor:pointer;font-size:20px;display:grid;place-items:center;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 4px 12px -6px rgba(58,32,80,.4)
+}
+.iconbtn:hover{transform:translateY(-2px);box-shadow:0 10px 18px -10px rgba(58,32,80,.5)}
+.iconbtn:active{transform:scale(.94)}
+.iconbtn:focus-visible{outline:3px solid var(--violet);outline-offset:2px}
+
+/* HERO / 本週新書 */
+.hero{max-width:1180px;margin:0 auto;padding:34px 20px 8px}
+.hero-title{text-align:center;margin-bottom:26px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-weight:700;letter-spacing:3px;font-size:14px;color:var(--violet);
+  background:#fff;border:1px solid var(--line);padding:6px 16px;border-radius:999px;box-shadow:var(--shadow)
+}
+.hero-title h1{
+  font-size:clamp(30px,6vw,56px);line-height:1.15;margin:16px 0 6px;font-weight:900;letter-spacing:1px;
+  background:linear-gradient(100deg,var(--coral),var(--violet) 45%,var(--sky));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent
+}
+.hero-title p{color:var(--ink-soft);font-size:clamp(15px,2.4vw,19px)}
+
+/* 聚光燈舞台（招牌元素） */
+.spotlight{
+  position:relative;
+  display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:34px;align-items:center;
+  background:linear-gradient(160deg,#fff,#FFF4F7);
+  border:1px solid var(--line);border-radius:32px;padding:30px;box-shadow:var(--shadow);overflow:hidden
+}
+.spotlight::before{
+  content:"";position:absolute;top:-40%;left:8%;width:340px;height:520px;
+  background:radial-gradient(ellipse at top,rgba(255,196,77,.55),rgba(255,196,77,0) 70%);
+  transform:rotate(-8deg);pointer-events:none;animation:beam 6s ease-in-out infinite
+}
+@keyframes beam{0%,100%{opacity:.7;transform:rotate(-8deg) scale(1)}50%{opacity:1;transform:rotate(-4deg) scale(1.05)}}
+.stage{position:relative;perspective:1000px}
+.stage .poster{
+  width:100%;aspect-ratio:9/16;border-radius:18px;object-fit:cover;display:block;
+  box-shadow:0 30px 50px -20px rgba(58,32,80,.6);
+  transform:rotateY(-6deg) rotateX(2deg);transition:transform .4s;cursor:pointer;background:#f2ecff
+}
+.stage .poster:hover{transform:rotateY(0) rotateX(0) scale(1.02)}
+.stage .glow{position:absolute;inset:-8px;border-radius:24px;background:conic-gradient(from 0deg,var(--coral),var(--gold),var(--teal),var(--violet),var(--coral));filter:blur(18px);opacity:.35;z-index:-1;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spot-info .tag{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--coral),var(--violet));padding:6px 16px;border-radius:999px;font-size:15px;box-shadow:var(--shadow)}
+.spot-info h2{font-size:clamp(24px,4vw,38px);margin:14px 0 8px;font-weight:900}
+.spot-info h2 .wk{font-family:"Baloo 2",sans-serif;color:var(--coral)}
+.spot-info p{color:var(--ink-soft);max-width:46ch;margin-bottom:18px}
+.cta{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
+  font-family:inherit;font-weight:800;font-size:18px;color:#fff;
+  padding:14px 26px;border-radius:16px;
+  background:linear-gradient(135deg,var(--coral),var(--violet));
+  box-shadow:0 14px 26px -12px var(--violet);transition:transform .15s,box-shadow .15s
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 20px 30px -12px var(--violet)}
+.cta:active{transform:scale(.97)}
+.cta:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* 控制列 */
+.controls{max-width:1180px;margin:32px auto 6px;padding:0 20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.count-chip{font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;font-size:17px;background:#fff;border:1px solid var(--line);padding:10px 18px;border-radius:999px;box-shadow:0 4px 12px -6px rgba(58,32,80,.4)}
+.count-chip b{color:var(--coral);font-size:20px}
+.ghost-btn{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;font-weight:700;font-size:16px;
+  padding:10px 18px;border-radius:999px;border:1px dashed var(--violet);color:var(--violet);background:#fff;transition:.15s
+}
+.ghost-btn:hover{background:var(--violet);color:#fff;border-style:solid}
+.ghost-btn:active{transform:scale(.96)}
+.ghost-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hint{margin-left:auto;color:var(--ink-soft);font-size:14px;display:flex;align-items:center;gap:6px}
+
+/* 書牆 */
+.wall{max-width:1180px;margin:18px auto 40px;padding:0 20px}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:26px 22px
+}
+.card{
+  position:relative;cursor:pointer;border:none;background:transparent;padding:0;font-family:inherit;text-align:left;
+  opacity:0;transform:translateY(24px);
+}
+.card.in{opacity:1;transform:none;transition:opacity .5s ease,transform .5s ease}
+.card .frame{
+  position:relative;border-radius:var(--radius);overflow:hidden;background:#fff;
+  border:1px solid var(--line);box-shadow:var(--shadow);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.card:hover .frame{transform:translateY(-6px) rotate(-1deg);box-shadow:0 30px 46px -20px rgba(58,32,80,.55)}
+.card:focus-visible{outline:none}
+.card:focus-visible .frame{outline:3px solid var(--violet);outline-offset:3px}
+.card .tape{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);z-index:3;
+  width:78px;height:22px;background:rgba(124,92,252,.28);border:1px dashed rgba(124,92,252,.5);border-radius:4px
+}
+.card img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:linear-gradient(135deg,#f4eefe,#ffeef4)}
+.card .badge{
+  position:absolute;top:12px;left:12px;z-index:2;
+  font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;font-size:14px;color:#fff;
+  padding:6px 12px;border-radius:999px;background:linear-gradient(135deg,var(--coral),var(--violet));
+  box-shadow:0 8px 16px -8px rgba(58,32,80,.7)
+}
+.card .newflag{
+  position:absolute;top:12px;right:12px;z-index:2;font-weight:800;font-size:12px;color:var(--ink);
+  padding:5px 10px;border-radius:999px;background:var(--gold);box-shadow:0 8px 16px -8px rgba(58,32,80,.6);
+  animation:pop 1.6s ease-in-out infinite
+}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.card .foot{display:flex;align-items:center;justify-content:space-between;padding:12px 6px 2px;font-weight:700}
+.card .foot .zoom{font-size:14px;color:var(--ink-soft);font-weight:500}
+
+/* 骨架載入 */
+.skeleton .frame{box-shadow:var(--shadow)}
+.skeleton-img{width:100%;aspect-ratio:9/16;background:linear-gradient(100deg,#efe9fb 30%,#faf5ff 50%,#efe9fb 70%);background-size:200% 100%;animation:sh 1.2s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+
+/* 載入 / 空狀態 */
+.status{max-width:760px;margin:26px auto;padding:26px 20px;text-align:center;color:var(--ink-soft)}
+.status .big{font-size:44px;margin-bottom:8px}
+.status.empty{background:#fff;border:1px dashed var(--violet);border-radius:24px;box-shadow:var(--shadow)}
+.status code{background:#F1ECFB;border-radius:8px;padding:2px 8px;font-size:15px;color:var(--violet);font-weight:700}
+.loader-dots{display:inline-flex;gap:6px;margin-top:10px}
+.loader-dots i{width:10px;height:10px;border-radius:50%;background:var(--violet);animation:bounce .9s ease-in-out infinite}
+.loader-dots i:nth-child(2){animation-delay:.15s;background:var(--coral)}
+.loader-dots i:nth-child(3){animation-delay:.3s;background:var(--teal)}
+@keyframes bounce{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-8px);opacity:1}}
+
+/* 燈箱 */
+.lightbox{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px}
+.lightbox.open{display:flex}
+.lb-veil{position:absolute;inset:0;background:rgba(30,18,45,.72);backdrop-filter:blur(6px)}
+.lb-stage{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px;max-height:92vh}
+.lb-img{max-height:78vh;max-width:min(92vw,460px);aspect-ratio:9/16;object-fit:contain;border-radius:16px;box-shadow:0 40px 70px -20px rgba(0,0,0,.7);background:#fff}
+.lb-bar{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:8px 10px;border-radius:999px}
+.lb-label{color:#fff;font-family:"Baloo 2","Noto Sans TC",sans-serif;font-weight:800;font-size:18px;min-width:96px;text-align:center}
+.lb-nav{width:48px;height:48px;border-radius:999px;border:none;cursor:pointer;font-size:22px;color:#fff;background:linear-gradient(135deg,var(--coral),var(--violet));display:grid;place-items:center;transition:.15s;box-shadow:0 10px 20px -10px #000}
+.lb-nav:hover{transform:scale(1.08)}
+.lb-nav:active{transform:scale(.92)}
+.lb-nav:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.lb-nav:focus-visible,.lb-close:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.lb-close{position:absolute;top:-8px;right:-8px;width:44px;height:44px;border-radius:999px;border:none;cursor:pointer;font-size:20px;background:#fff;color:var(--ink);display:grid;place-items:center;box-shadow:var(--shadow);z-index:3}
+.lb-close:hover{transform:rotate(90deg)}
+.lb-hint{color:rgba(255,255,255,.7);font-size:13px}
+
+/* 頁尾 */
+footer{text-align:center;padding:34px 20px 48px;color:var(--ink-soft);font-size:14px}
+footer .fbrand{font-weight:900;color:var(--ink);font-size:16px;margin-bottom:4px}
+footer a{color:var(--violet);font-weight:700;text-decoration:none}
+
+/* 彩帶 */
+#confetti{position:fixed;inset:0;z-index:80;pointer-events:none;display:none}
+
+/* 響應式 */
+@media(max-width:760px){
+  body{font-size:17px}
+  .spotlight{grid-template-columns:1fr;gap:20px;padding:22px;text-align:center}
+  .stage{max-width:240px;margin:0 auto}
+  .spot-info p{margin-left:auto;margin-right:auto}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:20px 16px}
+  .hint{margin-left:0;width:100%}
+  .brand small{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+  .card{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div>
+</div>
+<div class="bg-veil" aria-hidden="true"></div>
+<div class="floaties" id="floaties" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">📚</span>
+    <span>楊梅高中圖書館<small>每週一書 · WEEKLY BOOK</small></span>
+  </div>
+  <div class="topbar-actions">
+    <span class="pill" id="topCount" title="目前已上架本數">📖 <b id="topCountNum">—</b> 本</span>
+    <button class="iconbtn" id="soundBtn" aria-pressed="true" title="開啟／關閉音效">🔊</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-title">
+    <span class="eyebrow">✨ 本學期精選 · 每週推薦一本好書</span>
+    <h1>楊梅高中圖書館每週一書</h1>
+    <p>一週一本，翻開就有新發現。點一下海報，看得更清楚。</p>
+  </div>
+
+  <!-- 本週新書聚光燈：內容由 JS 依最新一週自動帶入 -->
+  <div class="spotlight" id="spotlight" style="display:none">
+    <div class="stage">
+      <div class="glow" aria-hidden="true"></div>
+      <img class="poster" id="spotImg" alt="本週推薦書海報">
+    </div>
+    <div class="spot-info">
+      <span class="tag">🌟 本週新書</span>
+      <h2>第 <span class="wk" id="spotWeek">—</span> 週推薦</h2>
+      <p>圖書館為你精選這一週的好書，快來看看這次介紹了哪一本！閱讀，是最划算的旅行。</p>
+      <button class="cta" id="spotCta">翻開來看 <span aria-hidden="true">→</span></button>
+    </div>
+  </div>
+</section>
+
+<div class="controls">
+  <span class="count-chip">已上架 <b id="countNum">—</b> / 21 週</span>
+  <button class="ghost-btn" id="rescanBtn" title="放了新圖後按這裡重新掃描">🔄 重新掃描新書</button>
+  <span class="hint">💡 想加第 22 週？把 <code style="background:#F1ECFB;border-radius:6px;padding:1px 6px;color:#7C5CFC;font-weight:700">第22週.PNG</code> 放進資料夾即可自動出現</span>
+</div>
+
+<main class="wall">
+  <div class="grid" id="grid"></div>
+  <div class="status" id="status">
+    <div class="big">🔎</div>
+    <div>正在掃描本學期的每週好書…</div>
+    <div class="loader-dots"><i></i><i></i><i></i></div>
+  </div>
+</main>
+
+<footer>
+  <div class="fbrand">楊梅高中圖書館 · 每週一書</div>
+  <div>閱讀，讓世界更寬廣 📚 ｜ 每週更新，敬請期待</div>
+</footer>
+
+<!-- 燈箱 -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="放大檢視每週一書">
+  <div class="lb-veil" id="lbVeil"></div>
+  <div class="lb-stage">
+    <button class="lb-close" id="lbClose" aria-label="關閉">✕</button>
+    <img class="lb-img" id="lbImg" alt="每週一書海報放大圖">
+    <div class="lb-bar">
+      <button class="lb-nav" id="lbPrev" aria-label="上一週">‹</button>
+      <span class="lb-label" id="lbLabel">第 — 週</span>
+      <button class="lb-nav" id="lbNext" aria-label="下一週">›</button>
+    </div>
+    <div class="lb-hint">← → 切換 · Esc 關閉 · 手機可左右滑動</div>
+  </div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+/* ============================================================
+   ★ 設定區：老師只要動這裡 ★
+   ------------------------------------------------------------
+   folder     圖片放的資料夾。若圖片和 index.html 放同一層 → 留空 ""；
+              若你把圖片集中放在 images/ 夾裡 → 改成 "images/"。
+   maxScan    最多掃描到第幾週（預設 60，未來加到 60 週都免改網頁）。
+   extensions 副檔名嘗試順序。GitHub 區分大小寫，故 .PNG 與 .png 都試。
+   weekName   檔名規則。預設「第N週」，對應 第1週.PNG、第2週.PNG …
+   ============================================================ */
+const CONFIG = {
+  folder: "",
+  maxScan: 60,
+  extensions: [".PNG", ".png"],
+  weekName: (n) => `第${n}週`,
+};
+
+/* ---------- 音效引擎（Web Audio，免外部檔案） ---------- */
+const Sound = (() => {
+  let ctx = null, on = true;
+  const ensure = () => { if(!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(ctx&&ctx.state==="suspended") ctx.resume(); };
+  const tone = (freq, dur=.12, type="sine", vol=.18, when=0) => {
+    if(!on||!ctx) return;
+    const t = ctx.currentTime+when;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type=type; o.frequency.setValueAtTime(freq,t);
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vol,t+.015);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t+dur+.02);
+  };
+  const noise = (dur=.18, vol=.12) => { // 翻頁沙沙聲
+    if(!on||!ctx) return;
+    const n=Math.floor(ctx.sampleRate*dur), buf=ctx.createBuffer(1,n,ctx.sampleRate), d=buf.getChannelData(0);
+    for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
+    const s=ctx.createBufferSource(); s.buffer=buf;
+    const f=ctx.createBiquadFilter(); f.type="highpass"; f.frequency.value=1200;
+    const g=ctx.createGain(); g.gain.value=vol;
+    s.connect(f).connect(g).connect(ctx.destination); s.start();
+  };
+  return {
+    unlock: ensure,
+    hover(){ ensure(); tone(880,.06,"sine",.06); },
+    click(){ ensure(); tone(523.25,.1,"triangle",.16); tone(783.99,.12,"triangle",.12,.05); },
+    open(){ ensure(); tone(392,.1,"sine",.16); tone(587.33,.14,"sine",.14,.06); tone(880,.16,"sine",.1,.12); },
+    page(){ ensure(); noise(.16,.1); tone(440,.06,"sine",.05); },
+    close(){ ensure(); tone(587.33,.09,"sine",.12); tone(392,.12,"sine",.1,.05); },
+    sparkle(){ ensure(); [523,659,784,1046].forEach((f,i)=>tone(f,.12,"triangle",.12,i*.06)); },
+    toggle(state){ ensure(); state?tone(659,.12,"sine",.16):tone(330,.12,"sine",.14); },
+    set(v){ on=v; }, get(){ return on; }
+  };
+})();
+
+/* ---------- 存在偵測：HEAD 為主，失敗改用 Image 探測 ---------- */
+async function urlExists(url){
+  try{
+    const res = await fetch(url, {method:"HEAD", cache:"no-store"});
+    if(res.ok) return true;
+    if(res.status===405 || res.status===501){ // 不支援 HEAD 時退回 GET
+      const g = await fetch(url, {method:"GET", cache:"no-store"});
+      return g.ok;
+    }
+    return false;
+  }catch(e){
+    return imageProbe(url);
+  }
+}
+function imageProbe(url){
+  return new Promise(res=>{ const im=new Image(); im.onload=()=>res(true); im.onerror=()=>res(false); im.src=url; });
+}
+async function resolveWeek(n){
+  for(const ext of CONFIG.extensions){
+    const url = CONFIG.folder + encodeURIComponent(CONFIG.weekName(n)) + ext;
+    if(await urlExists(url)) return url;
+  }
+  return null;
+}
+async function scanWeeks(){
+  // 第一階段：本學期公告的 1～21 週一定完整掃描（就算中間缺號也不漏）
+  const base = Math.min(21, CONFIG.maxScan);
+  const jobs=[];
+  for(let n=1;n<=base;n++) jobs.push(resolveWeek(n).then(url=>({n,url})));
+  const found = (await Promise.all(jobs)).filter(x=>x.url);
+
+  // 第二階段：22 週以後逐一探測，連續 6 週找不到就停止
+  // 讓未來新增的第 22、23… 週會自動出現，又不會白白發出幾十個無效請求。
+  let miss=0;
+  for(let n=base+1; n<=CONFIG.maxScan && miss<6; n++){
+    const url = await resolveWeek(n);
+    if(url){ found.push({n,url}); miss=0; } else { miss++; }
+  }
+  return found.sort((a,b)=>a.n-b.n);
+}
+
+/* ---------- 狀態與 DOM ---------- */
+let WEEKS = [];            // [{n, url}]
+const $ = s => document.querySelector(s);
+const grid = $("#grid"), statusEl = $("#status");
+
+/* 骨架 */
+function showSkeletons(count=8){
+  grid.innerHTML="";
+  for(let i=0;i<count;i++){
+    const d=document.createElement("div");
+    d.className="card skeleton in";
+    d.innerHTML=`<div class="frame"><div class="skeleton-img"></div></div>`;
+    grid.appendChild(d);
+  }
+}
+
+/* 渲染書牆（最新在前） */
+function render(){
+  grid.innerHTML="";
+  const ordered=[...WEEKS].sort((a,b)=>b.n-a.n);
+  const newest = ordered.length?ordered[0].n:null;
+  ordered.forEach(w=>{
+    const idx = WEEKS.findIndex(x=>x.n===w.n);
+    const btn=document.createElement("button");
+    btn.className="card";
+    btn.setAttribute("aria-label",`第 ${w.n} 週推薦書，點擊放大`);
+    btn.innerHTML=`
+      <div class="frame">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="badge">第 ${w.n} 週</span>
+        ${w.n===newest?'<span class="newflag">NEW ✨</span>':''}
+        <img loading="lazy" src="${w.url}" alt="第 ${w.n} 週每週一書海報">
+      </div>
+      <div class="foot"><span>第 ${w.n} 週</span><span class="zoom">🔍 放大</span></div>`;
+    btn.addEventListener("mouseenter",()=>Sound.hover());
+    btn.addEventListener("click",()=>{ Sound.open(); openLightbox(idx); });
+    grid.appendChild(btn);
+  });
+  revealOnScroll();
+}
+
+/* 進場動畫 */
+function revealOnScroll(){
+  const cards=[...grid.querySelectorAll(".card")];
+  if(!("IntersectionObserver" in window)){ cards.forEach(c=>c.classList.add("in")); return; }
+  const io=new IntersectionObserver((ents)=>{
+    ents.forEach((e,i)=>{ if(e.isIntersecting){ const el=e.target; const order=cards.indexOf(el); el.style.transitionDelay=Math.min(order,8)*60+"ms"; el.classList.add("in"); io.unobserve(el); } });
+  },{threshold:.08});
+  cards.forEach(c=>io.observe(c));
+}
+
+/* 聚光燈（本週新書＝最大週次） */
+function renderSpotlight(){
+  if(!WEEKS.length){ $("#spotlight").style.display="none"; return; }
+  const latest=[...WEEKS].sort((a,b)=>b.n-a.n)[0];
+  $("#spotImg").src=latest.url;
+  $("#spotImg").alt=`第 ${latest.n} 週每週一書海報`;
+  $("#spotWeek").textContent=latest.n;
+  $("#spotlight").style.display="grid";
+  const idx=WEEKS.findIndex(x=>x.n===latest.n);
+  $("#spotImg").onclick=()=>{ Sound.open(); openLightbox(idx); };
+  $("#spotCta").onclick=()=>{ Sound.open(); openLightbox(idx); };
+}
+
+/* 計數 */
+function updateCounts(){
+  const n=WEEKS.length;
+  $("#countNum").textContent=n;
+  $("#topCountNum").textContent=n;
+}
+
+/* ---------- 燈箱 ---------- */
+let lbIndex=0;
+const lb=$("#lightbox"), lbImg=$("#lbImg"), lbLabel=$("#lbLabel"), lbPrev=$("#lbPrev"), lbNext=$("#lbNext");
+function openLightbox(i){
+  lbIndex=i; syncLightbox(); lb.classList.add("open"); document.body.style.overflow="hidden";
+  lbClose.focus();
+}
+function syncLightbox(){
+  const w=WEEKS[lbIndex];
+  lbImg.src=w.url; lbImg.alt=`第 ${w.n} 週每週一書海報`;
+  lbLabel.textContent=`第 ${w.n} 週`;
+  lbPrev.disabled = lbIndex<=0;
+  lbNext.disabled = lbIndex>=WEEKS.length-1;
+}
+function closeLightbox(){ lb.classList.remove("open"); document.body.style.overflow=""; Sound.close(); }
+function step(d){
+  const ni=lbIndex+d;
+  if(ni<0||ni>=WEEKS.length) return;
+  lbIndex=ni; syncLightbox(); Sound.page();
+}
+$("#lbClose").onclick=closeLightbox;
+$("#lbVeil").onclick=closeLightbox;
+lbPrev.onclick=()=>step(-1);
+lbNext.onclick=()=>step(1);
+document.addEventListener("keydown",e=>{
+  if(!lb.classList.contains("open")) return;
+  if(e.key==="Escape") closeLightbox();
+  else if(e.key==="ArrowLeft") step(-1);
+  else if(e.key==="ArrowRight") step(1);
+});
+// 手機滑動
+let touchX=null;
+lb.addEventListener("touchstart",e=>{ touchX=e.changedTouches[0].clientX; },{passive:true});
+lb.addEventListener("touchend",e=>{ if(touchX===null) return; const dx=e.changedTouches[0].clientX-touchX; if(Math.abs(dx)>50) step(dx<0?1:-1); touchX=null; },{passive:true});
+
+/* ---------- 音效開關 ---------- */
+const soundBtn=$("#soundBtn");
+soundBtn.onclick=()=>{
+  const next=!Sound.get(); Sound.set(next);
+  soundBtn.textContent=next?"🔊":"🔇"; soundBtn.setAttribute("aria-pressed",next);
+  Sound.toggle(next);
+};
+["pointerdown","keydown"].forEach(ev=>window.addEventListener(ev,()=>Sound.unlock(),{once:true}));
+
+/* ---------- 重新掃描 ---------- */
+$("#rescanBtn").onclick=async()=>{
+  Sound.sparkle();
+  const before=WEEKS.length;
+  await load(true);
+  if(WEEKS.length>before) burstConfetti();
+};
+
+/* ---------- 主流程 ---------- */
+async function load(isRescan=false){
+  if(!isRescan){ showSkeletons(); }
+  statusEl.style.display="block";
+  statusEl.className="status";
+  statusEl.innerHTML=`<div class="big">🔎</div><div>正在掃描本學期的每週好書…</div><div class="loader-dots"><i></i><i></i><i></i></div>`;
+  WEEKS = await scanWeeks();
+  updateCounts();
+  if(!WEEKS.length){
+    grid.innerHTML="";
+    statusEl.className="status empty";
+    statusEl.innerHTML=`<div class="big">📭</div>
+      <div style="font-weight:700;color:var(--ink);font-size:20px;margin-bottom:6px">還沒有找到任何海報</div>
+      <div>請確認圖片檔名為 <code>第1週.PNG</code>、<code>第2週.PNG</code> …<br>
+      並和 <code>index.html</code> 放在同一個資料夾（或到設定區把 folder 改成你的資料夾名）。</div>`;
+    return;
+  }
+  statusEl.style.display="none";
+  renderSpotlight();
+  render();
+}
+
+/* ---------- 飄浮小圖示 ---------- */
+(function makeFloaties(){
+  const icons=["📚","📖","✨","🌟","🔖","💡","🎈","📗","📘","🖍️"];
+  const box=$("#floaties");
+  for(let i=0;i<10;i++){
+    const s=document.createElement("span");
+    s.textContent=icons[i%icons.length];
+    s.style.left=Math.random()*95+"%";
+    s.style.top=Math.random()*90+"%";
+    s.style.animationDelay=(-Math.random()*9)+"s";
+    s.style.fontSize=(18+Math.random()*20)+"px";
+    box.appendChild(s);
+  }
+})();
+
+/* ---------- 彩帶 ---------- */
+function burstConfetti(){
+  const cv=$("#confetti"), ctx=cv.getContext("2d");
+  cv.style.display="block"; cv.width=innerWidth; cv.height=innerHeight;
+  const colors=["#FF5A7E","#FFC44D","#22CBB4","#7C5CFC","#39B6FF"];
+  const parts=Array.from({length:120},()=>({
+    x:innerWidth/2+(Math.random()-.5)*200, y:innerHeight/3,
+    vx:(Math.random()-.5)*10, vy:Math.random()*-12-4,
+    g:.35+Math.random()*.2, s:6+Math.random()*8, r:Math.random()*6,
+    c:colors[Math.floor(Math.random()*colors.length)], rot:Math.random()*6
+  }));
+  let frame=0;
+  (function anim(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts.forEach(p=>{ p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.rot+=.2;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.c;
+      ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); ctx.restore(); });
+    frame++;
+    if(frame<130) requestAnimationFrame(anim); else cv.style.display="none";
+  })();
+}
+
+/* 啟動 */
+load().then(()=>{ if(WEEKS.length) setTimeout(burstConfetti,400); });
+addEventListener("resize",()=>{ const cv=$("#confetti"); cv.width=innerWidth; cv.height=innerHeight; });
+</script>
+</body>
+</html>
